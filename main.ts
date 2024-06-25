@@ -14,11 +14,8 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile4`, function (sprite, l
     game.gameOver(false)
     game.setGameOverEffect(false, effects.slash)
 })
-function startlevel () {
-	
-}
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile5`, function (sprite, location) {
-    FLOATING_SWORD.setPosition(31, 13)
+	
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.SHARP_ROCK, function (sprite, otherSprite) {
     info.changeScoreBy(1)
@@ -165,6 +162,7 @@ scene.setBackgroundColor(9)
 FLOATING_SWORD.ay = 350
 scene.cameraFollowSprite(FLOATING_SWORD)
 tiles.setCurrentTilemap(tilemap`level0`)
+FLOATING_SWORD.setBounceOnWall(false)
 for (let value of sprites.allOfKind(SpriteKind.Enemy)) {
     sprites.destroy(value)
 }
@@ -406,6 +404,30 @@ game.onUpdate(function () {
     	
     } else {
     	
+    }
+    if ((FLOATING_SWORD.isHittingTile(CollisionDirection.Left) || FLOATING_SWORD.isHittingTile(CollisionDirection.Right)) && FLOATING_SWORD.vy >= 0) {
+        FLOATING_SWORD.vy = 0
+        FLOATING_SWORD.ay = 0
+        FLOATING_SWORD.setImage(img`
+            . . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . . 
+            . . . . . f . . . . . . . . . . . 
+            . . . . f b f . . . . . . . . . . 
+            f f f f f b f f f f f f f f f f . 
+            f e e e f b f d d d d d d d d d f 
+            f e e e f b f d d d d d d d d d f 
+            f f f f f b f f f f f f f f f f . 
+            . . . . f b f . . . . . . . . . . 
+            . . . . . f . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . . 
+            `)
+    } else {
+        FLOATING_SWORD.ay = 350
     }
     if (0 < 0) {
         FLOATING_SWORD.image.flipX()

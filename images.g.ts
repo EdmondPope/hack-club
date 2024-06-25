@@ -24,22 +24,22 @@ namespace myImages {
 `;
             case "image1":
             case "Floating sword":return img`
-. . . . f f . . . . . . . . . . 
-. . . f d d f . . . . . . . . . 
-. . . f d d f . . . . . . . . . 
-. . . f d d f . . . . . . . . . 
-. . . f d d f . . . . . . . . . 
-. . . f d d f . . . . . . . . . 
-. . . f d d f . . . . . . . . . 
-. . . f d d f . . . . . . . . . 
-. . . f d d f . . . . . . . . . 
-. f f f f f f f f . . . . . . . 
-f b b b b b b b b f . . . . . . 
-. f f f f f f f f . . . . . . . 
-. . . f e e f . . . . . . . . . 
-. . . f e e f . . . . . . . . . 
-. . . f e e f . . . . . . . . . 
-. . . f f f f . . . . . . . . . 
+. . . . . . . . . . f f . . . . 
+. . . . . . . . . f d d f . . . 
+. . . . . . . . . f d d f . . . 
+. . . . . . . . . f d d f . . . 
+. . . . . . . . . f d d f . . . 
+. . . . . . . . . f d d f . . . 
+. . . . . . . . . f d d f . . . 
+. . . . . . . . . f d d f . . . 
+. . . . . . . . . f d d f . . . 
+. . . . . . . f f f f f f f f . 
+. . . . . . f b b b b b b b b f 
+. . . . . . . f f f f f f f f . 
+. . . . . . . . . f e e f . . . 
+. . . . . . . . . f e e f . . . 
+. . . . . . . . . f e e f . . . 
+. . . . . . . . . f f f f . . . 
 `;
         }
         return null;
