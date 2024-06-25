@@ -7,13 +7,18 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
         FLOATING_SWORD.vy = -200
     }
 })
-scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile4`, function (sprite, location) {
-    game.setGameOverEffect(false, effects.slash)
-    game.gameOver(false)
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile6`, function (sprite, location) {
+    FLOATING_SWORD.setPosition(31, 13)
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile4`, function (sprite, location) {
+    game.gameOver(false)
+    game.setGameOverEffect(false, effects.slash)
+})
+function startlevel () {
+	
+}
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile5`, function (sprite, location) {
-    game.gameOver(true)
-    game.setGameOverEffect(true, effects.confetti)
+    FLOATING_SWORD.setPosition(31, 13)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.SHARP_ROCK, function (sprite, otherSprite) {
     info.changeScoreBy(1)
@@ -29,8 +34,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
 })
 let axe: Sprite = null
 let SHARP_ROCK: Sprite = null
-let mySprite: Sprite = null
 let FLOATING_SWORD: Sprite = null
+FLOATING_SWORD = sprites.create(assets.image`Floating sword`, SpriteKind.Player)
+controller.moveSprite(FLOATING_SWORD, 100, 0)
 info.setLife(5)
 info.setScore(0)
 scene.setBackgroundImage(img`
@@ -156,12 +162,18 @@ scene.setBackgroundImage(img`
     cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
     `)
 scene.setBackgroundColor(9)
-FLOATING_SWORD = sprites.create(assets.image`Floating sword`, SpriteKind.Player)
-controller.moveSprite(FLOATING_SWORD, 100, 0)
-tiles.setCurrentTilemap(tilemap`level2`)
-tiles.placeOnRandomTile(mySprite, assets.tile`myTile9`)
 FLOATING_SWORD.ay = 350
 scene.cameraFollowSprite(FLOATING_SWORD)
+tiles.setCurrentTilemap(tilemap`level0`)
+for (let value of sprites.allOfKind(SpriteKind.Enemy)) {
+    sprites.destroy(value)
+}
+for (let value of sprites.allOfKind(SpriteKind.SHARP_ROCK)) {
+    sprites.destroy(value)
+}
+for (let value of tiles.getTilesByType(assets.tile`transparency16`)) {
+    tiles.setTileAt(value, assets.tile`transparency16`)
+}
 for (let value of tiles.getTilesByType(assets.tile`myTile7`)) {
     SHARP_ROCK = sprites.create(img`
         . . . . . . . . . . . . . . . . 
