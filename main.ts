@@ -1,5 +1,6 @@
 namespace SpriteKind {
     export const SHARP_ROCK = SpriteKind.create()
+    export const axe = SpriteKind.create()
 }
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (FLOATING_SWORD.vy == 0) {
@@ -15,12 +16,23 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile5`, function (sprite, l
     game.setGameOverEffect(true, effects.confetti)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.SHARP_ROCK, function (sprite, otherSprite) {
-    let mySprite: Sprite = null
     info.changeScoreBy(1)
-    sprites.destroy(mySprite)
+    sprites.destroy(otherSprite)
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    sprites.destroy(otherSprite)
+    if (FLOATING_SWORD.y < otherSprite.y) {
+        info.changeScoreBy(5)
+    } else {
+        info.changeLifeBy(-1)
+    }
+})
+let axe: Sprite = null
 let SHARP_ROCK: Sprite = null
+let mySprite: Sprite = null
 let FLOATING_SWORD: Sprite = null
+info.setLife(5)
+info.setScore(0)
 scene.setBackgroundImage(img`
     cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
     cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -147,6 +159,7 @@ scene.setBackgroundColor(9)
 FLOATING_SWORD = sprites.create(assets.image`Floating sword`, SpriteKind.Player)
 controller.moveSprite(FLOATING_SWORD, 100, 0)
 tiles.setCurrentTilemap(tilemap`level2`)
+tiles.placeOnRandomTile(mySprite, assets.tile`myTile9`)
 FLOATING_SWORD.ay = 350
 scene.cameraFollowSprite(FLOATING_SWORD)
 for (let value of tiles.getTilesByType(assets.tile`myTile7`)) {
@@ -168,6 +181,221 @@ for (let value of tiles.getTilesByType(assets.tile`myTile7`)) {
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         `, SpriteKind.SHARP_ROCK)
+    animation.runImageAnimation(
+    SHARP_ROCK,
+    [img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . c c c c c . . . . . . 
+        . . . . c d d d d d c . . . . . 
+        . . . c d d d d d d c . . . . . 
+        . . c d d d d d d d c . . . . . 
+        . c c c c c c c c c c . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `,img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . c c c c c . . . . . . 
+        . . . . c d d d d d c . . . . . 
+        . . . c d d d d d d c . . . . . 
+        . . c c c c c c c c c . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `,img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . c c c c c . . . . . . 
+        . . . . c d d d d d c . . . . . 
+        . . c c c c c c c c c . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `,img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . c c c c c . . . . . . 
+        . . c c c c c c c c c . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `,img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . c c c c c c c c c . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `,img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . c c c c c c c c c . . . . . 
+        . . . . . c c c c c . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `,img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . c c c c c c c c c . . . . . 
+        . . . . c d d d d d c . . . . . 
+        . . . . . c c c c c . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `,img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . c c c c c c c c c . . . . . 
+        . . . c d d d d d d c . . . . . 
+        . . . . c d d d d d c . . . . . 
+        . . . . . c c c c c . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `,img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . c c c c c c c c c c . . . . . 
+        . . c d d d d d d d c . . . . . 
+        . . . c d d d d d d c . . . . . 
+        . . . . c d d d d d c . . . . . 
+        . . . . . c c c c c . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `],
+    100,
+    true
+    )
     tiles.placeOnTile(SHARP_ROCK, value)
     tiles.setTileAt(value, assets.tile`transparency16`)
+    for (let value of tiles.getTilesByType(assets.tile`myTile8`)) {
+        axe = sprites.create(assets.image`AXE`, SpriteKind.Enemy)
+        tiles.placeOnTile(axe, value)
+        tiles.setTileAt(value, assets.tile`transparency16`)
+        axe.setPosition(axe.x + 80, axe.y + 80)
+        axe.follow(FLOATING_SWORD)
+    }
 }
+game.onUpdate(function () {
+    FLOATING_SWORD.setImage(assets.image`Floating sword`)
+    if (FLOATING_SWORD.vy < 0) {
+        FLOATING_SWORD.setImage(img`
+            . . . . . . . . . . . . f f f . 
+            . . . . . . . . . . . f d d d f 
+            . . . . . . . . . . f d d d d f 
+            . . . . . . . . . f d d d d d f 
+            . . . . . . . . f d d d d d f . 
+            . . . . . . . f d d d d d f . . 
+            . . . f . . f d d d d d f . . . 
+            . . f b f f d d d d d f . . . . 
+            . . f b b f d d d d f . . . . . 
+            . . . f b b f d d f . . . . . . 
+            . . . f f b b f f . . . . . . . 
+            . . f e e f b b f . . . . . . . 
+            . f e e e f f b b f . . . . . . 
+            . f e e f . . f f . . . . . . . 
+            . . f f . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `)
+    } else if (FLOATING_SWORD.vy > 0) {
+        FLOATING_SWORD.setImage(img`
+            . . . . . . . . . . . . . . . . 
+            . . f f . . . . . . . . . . . . 
+            . f e e f . . f f . . . . . . . 
+            . f e e e f f b b f . . . . . . 
+            . . f e e f b b f . . . . . . . 
+            . . . f f b b f f . . . . . . . 
+            . . . f b b f d d f . . . . . . 
+            . . f b b f d d d d f . . . . . 
+            . . f b f f d d d d d f . . . . 
+            . . . f . . f d d d d d f . . . 
+            . . . . . . . f d d d d d f . . 
+            . . . . . . . . f d d d d d f . 
+            . . . . . . . . . f d d d d d f 
+            . . . . . . . . . . f d d d d f 
+            . . . . . . . . . . . f d d d f 
+            . . . . . . . . . . . . f f f . 
+            `)
+    } else if (FLOATING_SWORD.x % 2 == 0) {
+    	
+    } else {
+    	
+    }
+    if (0 < 0) {
+        FLOATING_SWORD.image.flipX()
+    }
+})
